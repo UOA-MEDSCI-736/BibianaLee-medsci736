@@ -58,7 +58,10 @@
     -upload to github - email mentor about updates - 1/2 done as at 27/09/2016
     
 3rd – 9th of October (20) 
-    -Clean up code and make sure it can handle multiple files 
+    - revise code for files - atm it is not reproducible <--moved on from last week- revised after reply from supervisor and looking at rest of files ** #priority 
+	- need way to extract rows without index number 
+	- need way to cut out NAN values in the dataframe 
+	- alternatively will look at another way to go about this e.g. loading values into the dataframe after extraction 
     -if it can handle the files slice out the means for height 0 for the left ear for a smaple of 10 files 
     - look at statistical analysis libraries - pandas or scipy 
     - Put the means through a one way ANOVA analysis using one of the libraries
