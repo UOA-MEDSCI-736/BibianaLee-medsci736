@@ -12,8 +12,10 @@
 import pandas as pd
 import numpy as np
 
+
+lines = [] #open a new list called "lines"
+
 with open("13D4") as file: #open 13D4 and name it file 
-    lines = [] #open a new list called "lines"
     for line in file: #for every line in files 
         if not line.strip().startswith("#") and not line.strip() == '': #take out lines starting with '#' and any blank lines
              lines.append(line.rstrip().split(",")) #split the lines at the delimiter ',' and append the lines to the list 'lines' 
