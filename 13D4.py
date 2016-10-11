@@ -1,81 +1,120 @@
 
 # coding: utf-8
 
-# In[1]:
+# In[13]:
+
+#Python 2.7.12 
+#pandas version : u'0.18.1
+
+##This script contains the main parse code for the file 13D4## 
+#This script extracts lines and passes them through pandas for statistical analysis
 
 import pandas as pd
 import numpy as np
 
-with open("13D4") as file:
-    lines = []
-    for line in file:
-        if not line.strip().startswith("#") and not line.strip() == '':
-             lines.append(line.rstrip().split(","))
+
+lines = [] #open a new list called "lines"
+
+with open("13D4") as file: #open 13D4 and name it file 
+    for line in file: #for every line in files 
+        if not line.strip().startswith("#") and not line.strip() == '': #take out lines starting with '#' and any blank lines
+             lines.append(line.rstrip().split(",")) #split the lines at the delimiter ',' and append the lines to the list 'lines' 
+
                 
-df = pd.DataFrame(lines)  
-df[1] = pd.to_numeric(df[1]) #wtf <-look at lambda function from lec
-df[2] = pd.to_numeric(df[2])
-df[3] = pd.to_numeric(df[3])
-df[4] = pd.to_numeric(df[4])
-df[5] = pd.to_numeric(df[5])
-df[6] = pd.to_numeric(df[6])
-df[7] = pd.to_numeric(df[7])
-df[8] = pd.to_numeric(df[8])
-df[9] = pd.to_numeric(df[9])
-df[10] = pd.to_numeric(df[10])
-df[11] = pd.to_numeric(df[11])
-df[12] = pd.to_numeric(df[12])
-df[13] = pd.to_numeric(df[13])
+##Lists for Inputs##
+time = []
+aif = []
+                
+##Lists for Ouputs##                
+ktrans_val = []
+difcoef_val = []
+pixelen_val = []
+pixelstd_val = []
 
-ktrans = [df[2:10],df[18:26]] #getting Ktrans rows - probably not the best way to do this...
-result = pd.concat(ktrans) #merging them
-result = result.drop(result.columns[5:14], axis=1) # drop the nones 
-result[0] = result[0].str.split('_') #split list in index0
-result[['Remove','Ktrans','ID1','ID2']]= result[0].apply(pd.Series) #make list columns
-result.drop(result.columns[[0]], axis=1, inplace=True) #drop the original one
-df2= result.set_index(['Ktrans', 'ID1','ID2']) #multiindex it 
-df2.columns = ['Mean','STD','Max','Min','what'] #columns be renames with the random thing i should get rid of
-yo = df2.drop(df2.columns[[4]], axis=1, inplace=True) #random column removed 
+##extracting lines ##
+for line in lines: # for lines in the list lines
+    str1 = ''.join(line) #make the lines strings
+    
+##extracting Inputs##
+    if str1.find("aif") != -1: #if the string has the word 'aif' extract it 
+        aif.append(line) #append it to the corresponding list
+        
+    elif str1.find("time") != -1:#if the string has the word 'time' extract it 
+        time.append(line) #append it to the corresponding list
+        
+##extracting Outputs## 
+    elif str1.find("ktrans") != -1: #if the string has the word 'ktrans' extract it 
+            ktrans_val.append(line)  #append it to the corresponding list - ktrans_val
+    
+    elif str1.find("difcoef") != -1: #if the string has the word 'difcoef' extract it 
+        difcoef_val.append(line)  #append it to the corresponding list  - difcoef_val
+        
+    elif str1.find("enhanc(t)") != -1:#if the string has the word 'enhanc(t)' extract it 
+        pixelen_val.append(line) #append it to the corresponding list - piexelen_val
+    
+ 
+    elif str1.find("std") != -1:#if the string has the word 'stf' extract it 
+        pixelstd_val.append(line)  #append it to the corresponding list - pixelstd_val
 
-difcoef = df[34:50] #getting difcoef rows - probably not the best way to do this...
-result1 = difcoef.drop(difcoef.columns[5:14], axis=1) # drop the nones
-result1[0] = result1[0].str.split('_') #split list in index0
-result1[['Remove','Difcoef','ID1','ID2']]= result1[0].apply(pd.Series) #make list columns
-result1.drop(result1.columns[[0]], axis=1, inplace=True) #drop the original one
-df3= result1.set_index(['Difcoef', 'ID1','ID2']) #multiindex it 
-df3.columns = ['Mean','STD','Max','Min','what'] #columns be renamed with the random thing i should get rid of
-yo2 = df3.drop(df3.columns[[4]], axis=1, inplace=True) #random column removed 
 
-enhan = [df[10:18],df[26:34]] #getting Ktrans rows - probably not the best way to do this...
-result2 = pd.concat(enhan) #merging them
-result2 = result2.drop(result2.columns[13], axis=1) # drop the nones 
-result2[0] = result2[0].str.split('_') #split list in index0
-result2[['Remove','Pixel enhancement Ave','ID1','ID2']]= result2[0].apply(pd.Series) #make list columns
-result2.drop(result2.columns[[0]], axis=1, inplace=True) #drop the original one
-df4 = result2.set_index(['Pixel enhancement Ave', 'ID1','ID2']) #multiindex it 
-df4.columns = ['enhancement1', 'enhancement2','enhancement3','enhancement4','enhancement5', 'enhancement6', 'enhancement7', 'enhancement8', 'enhancement9', 'enhancement10', 'enhancement11', 'enhancementT','what']
-yo3 = df4.drop(df4.columns[[12]], axis=1, inplace=True) #random column removed 
 
-enhan1 = df[50:66]
-result3 = enhan1.drop(enhan1.columns[13], axis=1) # drop the nones
-result3[0] = result3[0].str.split('_') #split list in index0
-df5 = result3[['remove','Remove','Pixel enhancement std','ID1','ID2']]= result3[0].apply(pd.Series) #make list columns
-result3.drop(result3.columns[[0]], axis=1, inplace=True) #drop the original one
-df5 = result3.set_index(['Pixel enhancement std', 'ID1','ID2']) #multiindex it 
-df5.columns = ['enhancement1', 'enhancement2','enhancement3','enhancement4','enhancement5', 'enhancement6', 'enhancement7', 'enhancement8', 'enhancement9', 'enhancement10', 'enhancement11', 'enhancementT','what','what']
-df5 = df5.drop(df5.columns[12:13], axis=1) 
+# In[9]:
 
-print df2
+##passing the lists through a pandas dataframe for visualisation and analysis##
 
-print df3
+##INPUTS##
+#aif 
+aif_df = pd.DataFrame((aif), #pass list aif into pandas
+                    index = ['aif']) #label index
+aif_df.drop(aif_df[[0]], axis=1, inplace=True) #drop column
 
-print df4
+#Time
+time_df = pd.DataFrame((time), #pass list time into pandas
+                    index = ['time (seconds)']) #label index
+time_df.drop(time_df[[0]], axis=1, inplace=True) #drop column
 
-print df5
 
-#How to slice data: df#.loc['index1','index2','index3']['column']
-df2.loc['ktrans','294','0':]['Mean'] 
-# In[ ]:
+##OUTPUTS## 
+
+##Ktrans Dataframe## 
+ktrans_df = pd.DataFrame((ktrans_val), #pass the list ktrans_val through pandas 
+                         columns = ['none', 'Mean','STD','Max','Min']) #label the columns 
+ktrans_df['none'] = ktrans_df['none'].str.split('_') #split the list in the column 'none' by the delimiter ","
+ktrans_df[['none','Ktrans','ID1','ID2']]= ktrans_df['none'].apply(pd.Series) # split the list in none into columns and label them
+ktrans_df = ktrans_df.drop('none', 1) #drop any columns labeled 'none'
+ktrans_df = ktrans_df.set_index(['Ktrans', 'ID1','ID2']) #multi index the new columns 
+
+##Difcoef Dataframe## 
+difcoef_df = pd.DataFrame((difcoef_val), #pass the list difcoef_val through pandas 
+                         columns = ['none', 'Mean','STD','Max','Min'])#label the columns
+difcoef_df['none'] = difcoef_df['none'].str.split('_') #split the list in the column 'none' by the delimiter ","
+difcoef_df[['none','Difcoef','ID1','ID2']]= difcoef_df['none'].apply(pd.Series) # split the list in none into columns and label them
+difcoef_df = difcoef_df.set_index(['Difcoef', 'ID1','ID2']) #drop any columns labeled 'none'
+difcoef_df = difcoef_df.drop('none', 1) #multi index the new columns 
+
+##Pixel Enchancement values Dataframe## 
+ehan_df = pd.DataFrame(pixelen_val) #pass the list pixelen_val through pandas
+ehan_df[0] = ehan_df[0].str.split('_') #split the list in the column 'none' by the delimiter ","
+ehan_df[['none','Pixel enhancement Ave','ID1','ID2']]= ehan_df[0].apply(pd.Series) # split the list in none into columns and label them
+ehan_df.drop(ehan_df.columns[[0]], axis=1, inplace=True) #drop column with the index 0 
+ehan_df = ehan_df.set_index(['Pixel enhancement Ave', 'ID1','ID2'])  #multi index the columns
+ehan_df = ehan_df.drop('none', 1) #drop any columns labeled 'none'
+
+##Pixel Enchancement standard dev Dataframe## 
+std_df = pd.DataFrame(pixelstd_val) #pass the list pixelstd_val through pandas
+std_df[0] = std_df[0].str.split('_') #split the list in the column 'none' by the delimiter ","
+std_df[['none', 'none','Pixel enhancement STD','ID1','ID2']]= std_df[0].apply(pd.Series) # split the list in none into columns and label them
+std_df.drop(std_df.columns[[0]], axis=1, inplace=True) #drop column with the index 0 
+std_df = std_df.set_index(['Pixel enhancement STD', 'ID1','ID2']) #multi index the columns
+std_df = std_df.drop('none', 1) #drop any columns labeled 'none'
+
+
+# In[11]:
+
+##Extacting specific values from pandas dataframe##
+#dataframe name.loc[multi index names][column name or index] e.g. 
+ktrans_df.loc['ktrans','294','0':]['Mean'] #extracting specific values from the dataframes
+
 
 
 
