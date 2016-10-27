@@ -44,8 +44,8 @@ Although a prototype, this project could possibly provide reference data that ca
  - So the name should contain **a number** followed by a **D** then another **number**
  - For example: a file labeled **13D4** is an animal that has been imaged 13 times, 4 days after treatment 
  
- ###Labels 
- - The data file must contain the following labels. **This is a must**
+ ###Labels - THE SCRIPT WILL NOT WORK WITHOUT THESE LABELS
+ - The data file must contain the following labels. **This is a must.**
  - The Ktrans and Diffusion coefficient labels must be followed by four numbers 
  - ID1 can be either 294 (Right ear) or 295 (Left ear) 
  - ID2 is the height of the cochlear anatomy and ranges from 0 - 7 
