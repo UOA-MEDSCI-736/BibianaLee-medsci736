@@ -257,6 +257,6 @@ The expected graph output can be found in the DummyData_Project_IE folder and is
 - If these tests do not pass please make sure that the `menu()` has a `#` in front of it and the `#` in front of `return lines` has been removed 
 - If the tests pass please removed the `#` in front of the `menu()` and reinstate the `#` in front of the `return lines` 
 - **Now you can run the programme using the instructions above using the Dummy Data provided or with you own file ** 
-###Please Note
+   **Please Note**
 - If you are using your own data be aware of the data requirements or feel free to modify the code to suit your needs 
 
