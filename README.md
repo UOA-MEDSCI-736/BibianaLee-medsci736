@@ -89,10 +89,13 @@ Although a prototype, this project could possibly provide reference data that ca
    
 ##Running the programme using the test data
 ###Loading project_IE.py
-1) Download the test_Project_IE folder and transfer the project_IE.py
+1) Download the `DummyData_Project_IE` folder and transfer the project_IE.py into this folder. 
+   - This step is incredibly important as the file will not run without the datafiles present in the folder 
+   
 2) Open a command line terminal in the folder containing project_IE.py
  
 3) Type in python project_IE.py in the command window 
+
 4) Once this is complete you should be greeted with the first menu 
 
    ```
