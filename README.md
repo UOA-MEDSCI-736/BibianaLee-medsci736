@@ -7,9 +7,9 @@ Visualisation (graphing) was achieved using a plotting library called [matplotli
 
 This study looks to quantify spatial and temporal inflammation-induced changes in the capsular permeability and macrophage infiltration in guinea-pig cochlea using MRI. Modelling of such exchanges in blood and different inner ear (IE) compartments require the analysis of a substantial amount of data. 
 
-These data have been extracted from a set of MRI which measures the propagation of a contrast agent injected into the IE. This project aims to investigate the parsing of this data and statistical analysis of these results. 
+This data was obtained from an ongoing replication study currently being conducted at the University of Auckland. Using Project IE, the MRI values can be extracted and indexed. Each text file contains a set of MRI which measures the propagation of a contrast agent injected into the IE.  
 
-This project could provide reference data that can in future be used to quantitatively assess the treatment of ear disease in animal models and establish a platform from which such techniques can be transferred into clinical practice. 
+Although a prototype, this project could possibly provide reference data that can in future be used to quantitatively assess the treatment of ear disease in animal models and establish a platform from which such techniques can be transferred into clinical practice. 
 
 ##Contributors
 
@@ -22,10 +22,19 @@ This project could provide reference data that can in future be used to quantita
 1. **Python**
    - Successful running of this programme will require Python 2.7.12
    - You can download Python 2.7.12 following [This link ](https://www.python.org/downloads/release/python-2712/)  
-   - Alternatively, you may alter the script to fit your version of Python
 
 2. **Operating System**
   - Ubuntu 16.04 LTS 
+  
+3. **Python Packages** 
+   - Python 2.7.12 
+      - Instructions on how to install can be found [here] (https://wiki.python.org/moin/BeginnersGuide/Download) 
+   - pandas version : u'0.18.1
+      - Instructions on how to install can be found [here](http://pandas.pydata.org/pandas-docs/stable/install.html)
+   - matplotlib 1.5.3 
+      - Instructions on how to install can be found [here](http://matplotlib.org/faq/installing_faq.html)
+   - SciPy 0.18.1
+      - Instructions on how to install can be found [here](https://www.scipy.org/install.html)
 
 
 ##Data File Requirements
@@ -164,7 +173,7 @@ This project could provide reference data that can in future be used to quantita
 
 ### DataFrames 
 - The expected output for the dummy data should look like this for the Ktrans DataFrame 
-- A seperate text filed called `10D4_expected_output.txt` can be found in the test folder to compare your results 
+- A seperate text filed called `10D4_expected_output.txt` can be found in the DummyData_Project_IE folder to compare your results 
 
    ```
    ---------------------------------------------------
@@ -191,7 +200,7 @@ This project could provide reference data that can in future be used to quantita
    ```
 
 ### Graph 
-The expected graph output can be found in the test folder and is called `Your_Graph_10D4.png`
+The expected graph output can be found in the DummyData_Project_IE folder and is in the Expected_Outputs folder in a .png format. 
 
 ###one-way ANOVA 
 - The expected output for the dummy data should look like this: 
@@ -212,10 +221,42 @@ The expected graph output can be found in the test folder and is called `Your_Gr
    You may choose another option now.
    ```
    
+   
+   
 ##Limitations 
    - The analysis and graph produced are for demonstrative purposes only. **This is a prototype**.
    - This prototype only checks for `#` and `empty spaces` as the MRI data text files not contain any other intrusive characters. Other characters such as a `@` may not detected by the software while parsing. It is therefore advised that the user **manually checks the file first if they are using their own data**.
    - The graph output is labeled "Your Graph" and will need to be manually re-named 
    - Once a file is in the programme it will be parsed and analyzed and it must run its course before you can quit and load another separate file 
    - This prototype is specifically for MRI text datafiles produced by an ongoing study so the labels must be present in the raw data or else the code will not work 
+   - This programme has not been tested in other environments 
    
+## Running Tests 
+
+- Programme testing requires a `pytest version 2.9.2` which can be downloaded and installed following this [link] (http://doc.pytest.org/en/latest/getting-started.html) 
+- As this programme has not been tested in other environments the developer cannot guarantee its use in Windows or OS. 
+- This test has only been run in a **Linux environment**
+- In order to test the script please ensure that the `Project_IE.py` is in the `Testing_Project_IE folder` 
+- Open `Project_IE.py` and add a `#` in front of `menu()` on the last line 
+- Go to line 74 and remove the `#` in front of `return lines`
+- Open command in the folder `Testing_Project_IE folder` - a comphrehensive guide on command line can be found [here] (https://help.ubuntu.com/community/UsingTheTerminal)
+- Once here type in `-m pytest`
+- You should see the following results 
+   ```
+   ============================= test session starts ==============================
+   platform linux2 -- Python 2.7.12, pytest-2.9.2, py-1.4.31, pluggy-0.3.1
+   rootdir: /home/admin736/Desktop/BibianaLee-medsci736/Testing_Project_IE, inifile: 
+   collected 9 items 
+
+   test_project_IE.py .........
+
+   =========================== 9 passed in 0.49 seconds ===========================
+   admin736@UOA346266:~/Desktop/BibianaLee-medsci736/Testing_Project_IE$ 
+   ```
+- 9 tests should have passed
+- If these tests do not pass please make sure that the `menu()` has a `#` in front of it and the `#` in front of `return lines` has been removed 
+- If the tests pass please removed the `#` in front of the `menu()` and reinstate the `#` in front of the `return lines` 
+- **Now you can run the programme using the instructions above using the Dummy Data provided or with you own file ** 
+###**Please Note** 
+- If you are using your own data be aware of the data requirements or feel free to modify the code to suit your needs 
+
