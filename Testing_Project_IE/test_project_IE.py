@@ -2,6 +2,7 @@ from project_IE import * #import all the functions from project_IE
 
 
 #READ THE README BEFORE TRYING OUT TESTS
+#Licencing and Acknowledgement information can be found here: https://github.com/BibianaLee/BibianaLee-medsci736/blob/master/README.md
 
 
 file = open('Testing_Data', 'r') #test file for the append values test
