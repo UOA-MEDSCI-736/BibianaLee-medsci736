@@ -11,6 +11,11 @@ These data have been extracted from a set of MRI which measures the propagation 
 
 This project could provide reference data that can in future be used to quantitatively assess the treatment of ear disease in animal models and establish a platform from which such techniques can be transferred into clinical practice. 
 
+##Contributors
+
+1. Bibiana Lee
+2. Kreshnik Pireva
+3. Callum Chalmers
 
 ### Prerequisities
 
