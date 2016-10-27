@@ -1,3 +1,5 @@
 /__pycache__/*.pyc
 /DummyData_Project_IE/__pycache__
 /Testing_Project_IE/__pycache__
+/DummyData_Project_IE/.ipynb_checkpoints
+/DummyData_Project_IE/.cache
