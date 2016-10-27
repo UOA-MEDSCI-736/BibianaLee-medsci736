@@ -221,8 +221,7 @@ The expected graph output can be found in the DummyData_Project_IE folder and is
    You may choose another option now.
    ```
    
-   
-   
+  
 ##Limitations 
    - The analysis and graph produced are for demonstrative purposes only. **This is a prototype**.
    - This prototype only checks for `#` and `empty spaces` as the MRI data text files not contain any other intrusive characters. Other characters such as a `@` may not detected by the software while parsing. It is therefore advised that the user **manually checks the file first if they are using their own data**.
@@ -256,9 +255,15 @@ The expected graph output can be found in the DummyData_Project_IE folder and is
 - 9 tests should have passed
 - If these tests do not pass please make sure that the `menu()` has a `#` in front of it and the `#` in front of `return lines` has been removed 
 - If the tests pass please removed the `#` in front of the `menu()` and reinstate the `#` in front of the `return lines` 
+
+## Run your own file 
 - **Now you can run the programme using the instructions above using the Dummy Data provided or with you own file ** 
    **Please Note**
-- If you are using your own data be aware of the data requirements or feel free to modify the code to suit your needs 
+- If you are using your own data be aware of the data requirements or feel free to modify the code to suit your needs
+- Simply follow the instructions outlined above. 
+- Given that the tests run and you have completed a test run with the dummy data you should be able to navigate your way around Project IE 
+- Errors will be displayed and if there are any problems feel free to contact me through GitHub’s issue system 
+
 
 ##Acknowledgement 
 -	Code was taken and modified from Callum Chalmer (2016) and was permissible under the MIT licence 
