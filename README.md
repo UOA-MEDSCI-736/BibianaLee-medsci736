@@ -264,10 +264,10 @@ The expected graph output can be found in the DummyData_Project_IE folder and is
 -	Code was taken and modified from Callum Chalmer (2016) and was permissible under the MIT licence 
 -	Pathway codes and some test code was used as a foundation for Project IE 
    ```
-   Callum Chalmer (2016) 
-   Title: ePygenetics
-   Author: Callum Chalmer
-   Date: 2016
-   Code version 
-   Availability: https://github.com/UOA-MEDSCI-736/CallumChalmers29-crispy-disco
+   - Callum Chalmer (2016) 
+   - Title: ePygenetics
+   - Author: Callum Chalmer
+   - Date: 2016
+   - Code version 1
+   - Availability: https://github.com/UOA-MEDSCI-736/CallumChalmers29-crispy-disco
       ```
