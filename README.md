@@ -1,6 +1,7 @@
-# The statistical Analysis of the Anatomy of the Inner Ear (IE)
-This project used Python and python data analysis library [Pandas](http://pandas.pydata.org/) in order to parse, structure and analyse the large MRI datasets provided for this project. 
-Visualisation of the project data was achieved using a plotting library called [matplotlib](http://matplotlib.org/) and analysis was completed using the [SciPy library](https://www.scipy.org/)
+# Project IE
+Project IE is a python supported module which parses, stores and analyses cochlear MRI data from text files. This prototype currently allows the user to input one raw file at a time to be tidied and passed through [pandas](http://pandas.pydata.org/) DataFrame for easy data management. The resulting DataFrames also enable further processing in the form of a one-way ANOVA analysis or can alternatively output a graph which is then saved as an image (.png). 
+
+Visualisation (graphing) was achieved using a plotting library called [matplotlib](http://matplotlib.org/) and the one-way ANOVA analysis was completed using the [SciPy library](https://www.scipy.org/)
 
 ## Project Description
 
@@ -10,6 +11,11 @@ These data have been extracted from a set of MRI which measures the propagation 
 
 This project could provide reference data that can in future be used to quantitatively assess the treatment of ear disease in animal models and establish a platform from which such techniques can be transferred into clinical practice. 
 
+##Contributors
+
+1. Bibiana Lee
+2. Kreshnik Pireva
+3. Callum Chalmers
 
 ### Prerequisities
 
@@ -33,5 +39,5 @@ This project could provide reference data that can in future be used to quantita
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE.txt]() file for details
+This project is licensed under the MIT License - see the [LICENSE.txt](https://github.com/BibianaLee/BibianaLee-medsci736/blob/master/LICENCE.txt) file for details
 
