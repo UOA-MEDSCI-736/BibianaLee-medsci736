@@ -263,6 +263,8 @@ The expected graph output can be found in the DummyData_Project_IE folder and is
 ##Acknowledgement 
 -	Code was taken and modified from Callum Chalmer (2016) and was permissible under the MIT licence 
 -	Pathway codes and some test code was used as a foundation for Project IE 
+
+
    ```
    - Callum Chalmer (2016) 
    - Title: ePygenetics
