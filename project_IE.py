@@ -2,9 +2,10 @@
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE."""
 #Python 2.7.12 
 #pandas version : u'0.18.1
+#matplotlib 1.5.3 
+#SciPy 0.18.1
 
-import pandas as pd
-import os
+import pandas as pd 
 import matplotlib.pyplot as pyplot
 from scipy import stats  
 
@@ -21,28 +22,34 @@ pixelen_val = []
 pixelstd_val = []
 aif = []
 
-fileName = ""
 
 # This prints the main menu, and prompts for a choice
 def display_welcome_to_project_IE(): 
     print "Welcome to Project IE" #print what options you have
     print "your options are:"
     print " "
-    print "1) One file"
-    print "2) Quit"
+    print "1) One file" #process one file 
+    print "2) Quit" #quit the programme 
     print " "
+  
 
 #This function asks the user for input and is where the navigation process begins
-def ask_for_menu_input():
-    user_input = raw_input ("Choose your option: ") #ask the user for an input 1, 2, 3
-    print" " #blank line for screen aesthetics 
-    expected_user_input = ['1','2'] #These are the expected outputs for the welcome menu
-    proceed = check_the_user_input(expected_user_input, user_input) #checks user input
-    go_to_chosen_pathway(proceed) #passes user input to function which pipes them to the right function
+#Code pathway modelled from Callum Chalmer (2016) MIT license
+#    Title: ePygenetics
+#    Author: Callum Chalmer
+#    Date: 2016
+#    Code version: 1
+#    Availability:https://github.com/UOA-MEDSCI-736/CallumChalmers29-crispy-disco
 
-#This function was taken from Callum Chalmer(2016)- it checks the user input from a list of expected inputs and directs the end-user according to whether or not the input is valid or invalid
+def ask_for_menu_input():
+    user_input = raw_input ("Choose your option: ") #asks the user for an input -> they can choose between 1 or 2 
+    print" " #blank line for screen aesthetics 
+    expected_user_input = ['1','2'] #These are the expected inputs for the welcome menu
+    proceed = check_the_user_input(expected_user_input, user_input) # Function which checks the user_input, it ensures that the values are valid
+    go_to_chosen_pathway(proceed) #
+    
 def check_the_user_input(expected_user_input, user_input): #takes user input and compares it to a set of expected inputs to ensure the programme runs correctly
-    if user_input not in expected_user_input: #if the user_input is not in the list of expected outputs
+    if user_input not in expected_user_input: #if the user_input is not in the list of expected inputs 
         return 0 #a zero will be returned
     else: #if user enters an expected input
         return user_input #the user's will be returned 
@@ -55,14 +62,16 @@ def run_once(f): #copied from http://stackoverflow.com/questions/4103773/efficie
             return f(*args, **kwargs)
     wrapper.has_run = False
     return wrapper
+########################################################
+# NEED TO REMOVE '#' FROM 'return lines' WHEN TESTING #
+#######################################################
 
 ##This portion of code tidies and appends values to an empty list from the list of lists at the beginning of the script
 def append_values_to_lines(file): #appends lines to lines list after tidying
     for line in file: #reads line by line
         if not line.strip().startswith("#") and not line.strip() == '': #strips anything starting with a # and blank line
             lines.append(line.rstrip().split(",")) #seperates values by the deliminter ','
-       
-action = run_once(append_values_to_lines) #make sure the append_values_to_lines funtion only runs once
+            #return lines
 
 def append_values_to_lists(lines):#append values to corresponding list
 
@@ -86,11 +95,12 @@ def append_values_to_lists(lines):#append values to corresponding list
 
         elif str1.find("aif") != -1: #if 'aif' present in string
             aif.append(line) #append to the list aif
-        
         else: 
             break
+action = run_once(append_values_to_lines(lines)) #make sure the append_values_to_lines funtion only runs once
+ 
     ##DATAFRAMES##
-    #These are the dataframes - this is how the code manages the data retrieved from the inputted file
+    #These are the dataframes - this is how the code manages the data retrieved from the input file
     #Each list of labels and values is put through a dataframe in order to properly index it and manage it 
 
 def pandas_aif_df(aif): #function to put aif values through a dataframe
@@ -98,7 +108,6 @@ def pandas_aif_df(aif): #function to put aif values through a dataframe
                         index = ['aif']) #label index
     aif_df.drop(aif_df[[0]], axis=1, inplace=True) #drop column
     aif_df = aif_df.apply(pd.to_numeric) # converting objects to floats
-    aif_df = aif_df.apply(pd.to_numeric) # convert to float 
     return aif_df
 
 def pandas_time_df(time):#function to put time values through a dataframe
@@ -152,9 +161,7 @@ def pandas_pixel_enhancement_std(pixelstd_val):#function to put pixel enhancemen
     std_df = std_df.apply(pd.to_numeric) # converting objects to floats"""
     return std_df
 
-##Matplot Graph##
-#This is the portion of code where data from the pandas frame are sliced and then used as x or y inputs
- ##This portion of the code was modelled after Callum Chalmer(2016)'s code and processes the user input after it has been checked  
+##Chosen path way loop ##
 def go_to_chosen_pathway(user_input): #directs the user to the relevant function based on their input  
     
     if user_input == 0: #if user input invalid
@@ -162,97 +169,168 @@ def go_to_chosen_pathway(user_input): #directs the user to the relevant function
         ask_for_menu_input() #asks user to re-enter an input
     
     elif user_input == "1": # If the user wants to process just one file 
-        file = open(raw_input("Enter Filename: "),'r') #ask user for file name
-        fileName = file
-        append_values_to_lines(file) #function which cleans up and appends values to list called lines
-        append_values_to_lists(lines) #function which appends values to lists
-        print(pandas_ktrans_df(ktrans_val) )#call function for ktrans dataframe
-        print(pandas_difcoef_df(difcoef_val)) #call function for difcoef dataframe
-        print(pandas_pixel_enhancement_df(pixelen_val)) #call pixel enhancement ave dataframe
-        print(pandas_pixel_enhancement_std(pixelstd_val)) #call pixel_enhancement standard dev dataframe
-        print "Your dataframes have been printed" #once done print this message
-        secondary_menu() #call secondary menu which will give the user 4 options
+        try: # this is how the script handles a bad file - if the file is not in the same folder as the script it will not run and display the "except:" error message
+            file = open(raw_input("Enter Filename: "),'r') #ask user for file name
+            append_values_to_lines(file) #function which cleans up and appends values to list called lines
+            append_values_to_lists(lines) #function which appends values to lists
+            print "" #blank line for aesthetics
+            print "---------------------------------------------------" # line to indicate a new DataFrame
+            print "Your Ktrans DataFrame"
+            print "---------------------------------------------------" # line to indicate a new DataFrame
+            print(pandas_ktrans_df(ktrans_val) )#call function for ktrans dataframe
+            print "" #blank line for aesthetics
+            print "---------------------------------------------------"# line to indicate a new DataFrame
+            print "Your dicoef DataFrame"
+            print "---------------------------------------------------"# line to indicate a new DataFrame
+            print(pandas_difcoef_df(difcoef_val)) #call function for difcoef dataframe
+            print "" #blank line for aesthetics
+            print "---------------------------------------------------"# line to indicate a new DataFrame
+            print "Your Pixel Enchancement Averages DataFrame"
+            print "---------------------------------------------------"# line to indicate a new DataFrame
+            print(pandas_pixel_enhancement_df(pixelen_val)) #call pixel enhancement ave dataframe
+            print "" #blank line for aesthetics
+            print "---------------------------------------------------"# line to indicate a new DataFrame
+            print "Your Pixel Enhancement SD DataFrame"
+            print "---------------------------------------------------"# line to indicate a new DataFrame
+            print(pandas_pixel_enhancement_std(pixelstd_val)) #call pixel_enhancement standard dev dataframe
+            print "" #blank line for aesthetics
+            print "---------------------------------------------------"# line to indicate a new DataFrame
+            print "Your dataframes have been printed" #once done print this message
+            print "---------------------------------------------------"# line to indicate a new DataFrame
+            print "You may choose another option now"
+            print "" #blank line for aesthetics
+            secondary_menu() #call secondary menu which will give the user 3 options
+
+        except IOError: #if an error occurs due to an unreadable file, the script will print the following message
+            print "" #blank line for aesthetics
+            print ""#blank line for aesthetics
+            print "*****" # a line to bring attention to the message 
+            print ""#blank line for aesthetics
+            print "COULD NOT READ FILE"
+            print "Please check again or read the README"
+            print "Remember the script and the file have to be in SAME FOLDER"
+            print ""#blank line for aesthetics
+            print "******"  # a line to bring attention to the message 
+            print""#blank line for aesthetics
+            print "You may choose again or you may quit"
+            print "" #blank line for aesthetics
+            display_welcome_to_project_IE() #takes you back to the main menu where you can choose to input a valid file or exit the programme
+            ask_for_menu_input() #where the input goes 
+        
 
     elif user_input == "2": #quit menu
        quit()
 
+
 ##SECONDARY MENU##
 #This section of the code is where the secondary menu starts 
-#It prompts the user for for 1 of 4 options 
+#It prompts the user for for 1 of 3 options 
 
 def display_secondary_menu(): #prints the written portion of the secondary menu
     print "What would you like to do now?"#prints the four options options 
     print " " #blank line for aesthetics
     print "1) visualisation"
     print "2) one-way ANOVA"
-    print "3) Back to the main menu"
-    print "4) Quit"
+    print "3) Quit"
     print " "
-    
-def ask_for_secondary_menu_input():
+#again these pathways are very similar to the main menu ones they simply take an input and compare it against an expected input list. If the user inputted value is present in the list then the scrip will call another function and then move into a loop 
+def ask_for_secondary_menu_input(): 
     secondary_user_input = raw_input ("Choose your option: ") #ask the user for an input 1, 2, 3
     print" " #blank line for screen aesthetics 
-    expected_user_input_secondary = ['1','2','3','4'] #These are the expected outputs for the welcome menu
+    expected_user_input_secondary = ['1','2','3'] #These are the expected outputs for the welcome menu
     proceed = check_the_user_input_secondarymenu(expected_user_input_secondary, secondary_user_input) #checks user input
     go_to_chosen_pathway_secondarymenu(proceed) #passes user input to function which pipes them to the right function
 
 def check_the_user_input_secondarymenu(expected_user_input_secondary, secondary_user_input): #takes user input and compares it to a set of expected inputs to ensure the programme runs correctly
-    if secondary_user_input not in expected_user_input_secondary: #if the user_input is not in the list of expected outputs
+    if secondary_user_input not in expected_user_input_secondary: #if the user_input is not in the list of expected inputs
         return 0 #a zero will be returned
     else: #if user enters an expected input
         return secondary_user_input #the user's will be returned 
     
 def go_to_chosen_pathway_secondarymenu(secondary_user_input): #directs the user to the relevant function based on their input  
     if secondary_user_input == 0: #if user input invalid
-        secondary_menu()
+        print "The number you have entered is invalid please choose either option 1, 2 or 3" #prints this message to say you entered a invalid number
+        secondary_menu() #takes you back to the secondary menu
 
     elif secondary_user_input == "1": # If the user wants to process just one file 
-        plot_enhancement_df_vs_time()
-        secondary_menu()
+        plot_enhancement_df_vs_time() #calls function to plot graph enhancement df vs time 
+        print "Your graph has been plotted and saved."
+        print ""
+        print "You may choose another option now"
+        print ""
+        secondary_menu() #takes you back to the secondary menu again
 
-    elif secondary_user_input == "2": #If the user wants to process multiple files
-        one_way_anova_enhan_aves(pandas_pixel_enhancement_df(pixelen_val))
-        secondary_menu()
+    elif secondary_user_input == "2": #this will put some of the data through a ANOVA analysis for demonstrative purposes 
+        one_way_anova_enhan_aves(pandas_pixel_enhancement_df(pixelen_val)) # take you to 
+        secondary_menu() #will call the secondary menu once this is done so that the user can do something else 
 
-    elif secondary_user_input == "3": #If the user wants to process multiple files  
-        menu()
     else:
-        quit()
+        quit() #quit the programme 
 
 def secondary_menu ():
-    display_secondary_menu()
-    ask_for_secondary_menu_input()
+    display_secondary_menu() #will display the secondary menu message 
+    ask_for_secondary_menu_input() #ask the user for input - one of three options - graphing, ANOVA or quit 
 
-def setting_y_values(pixelEnhanceDf, timedf):
-    max_column_no = len(timedf.columns) - 1
-    y_data = pixelEnhanceDf.loc['enhanc(t)','294', '0'][0:max_column_no]
-    return y_data
+def setting_y_values(pixelEnhanceDf, timedf): #getting y value for the plotting 
+    max_column_no = len(timedf.columns) - 1 #this is to ensure that all values are of the same length - again because this is for demonstrative purposes this practice is permissable if the user wishese to actually do something they must edit it 
+    y_data = pixelEnhanceDf.loc['enhanc(t)','294', '0'][0:max_column_no] #assign the values to the variable y_dat 
+    return y_data #return this <- not tested for as the DataFames make it hard 
 
-def setting_x_values(timeDf):
-    max_column_no = len(timeDf.columns) - 1
-    x_data = timeDf.loc['time(seconds)',1:max_column_no]
-    return x_data
+def setting_x_values(timeDf): #getting x value for plotting 
+    max_column_no = len(timeDf.columns) - 1 #ensure that there are the same no. of values in both dataframes 
+    x_data = timeDf.loc['time(seconds)',1:max_column_no] #assigns values to variable 
+    return x_data #return x_data when complete 
+#Using matplot to graph pixel enhancement ave vs time 
+#using the ggplot style 
+def plot_enhancement_df_vs_time():#funtion to plot 
+    
+    x_data = setting_x_values(pandas_time_df(time)) #calling function for setting x 
+    y_data = setting_y_values(pandas_pixel_enhancement_df(pixelen_val), pandas_time_df(time)) #calling funtion for setting y 
+    pyplot.style.use('ggplot') #plot style <- this can be edited to a different style
+    pyplot.title('Pixel Enhancement Average vs. Time (Seconds)') #adding title of graph
+    pyplot.xlabel('Time (Seconds)') #adding x label 
+    pyplot.ylabel('Pixel Enchancement Average') #adding y label
+    pyplot.axvline(x=0, color='blue') #color of line
+    pyplot.plot(x_data, y_data) #calling the x and y values 
+    pyplot.savefig("Your_Graph") #save as an image in folder
 
-def plot_enhancement_df_vs_time():
-    x_data = setting_x_values(pandas_time_df(time))
-    y_data = setting_y_values(pandas_pixel_enhancement_df(pixelen_val), pandas_time_df(time))
-    pyplot.style.use('ggplot')
-    pyplot.title('Pixel Enhancement Average vs. Time (Seconds)')
-    pyplot.xlabel('Time (Seconds)')
-    pyplot.ylabel('Pixel Enchancement Average')
-    pyplot.axvline(x=0, color='blue')
-    pyplot.plot(x_data, y_data)
-    pyplot.savefig(fileName)
-
-def one_way_anova_enhan_aves(pixelEnhanceDf):
-    height0 = pixelEnhanceDf.loc['enhanc(t)','294','0']
-    height1 = pixelEnhanceDf.loc['enhanc(t)','294','1']
-    height2 = pixelEnhanceDf.loc['enhanc(t)','294','2']      
+def one_way_anova_enhan_aves(pixelEnhanceDf): #this function collects and assigns the values to a variable after slicing from the Dataframe
+    height0 = pixelEnhanceDf.loc['enhanc(t)','294','0']#height 0 of the GP cochlear 
+    height1 = pixelEnhanceDf.loc['enhanc(t)','294','1']#height 1 of the GP cochlear 
+    height2 = pixelEnhanceDf.loc['enhanc(t)','294','2']#height 2 of the GP cochlear    
     f_val, p_val = stats.f_oneway(height0, height1, height2)   
-    print "One-way ANOVA P =", p_val    
-
+    print "___________________________________________________" #This is how the ANOVA is shown on command line as an output 
+    print "ANOVA"
+    print "___________________________________________________"
+    print ""
+    print "One-way ANOVA P =", p_val    #it will print the pvalue here 
+    print ""
+    if p_val < 0.05: #this will interpret the pvalue and print a message saying that it is significant and then follow this up with a final feedback so that the user knows that the code has ended 
+        print ""
+        print ""
+        print "The differences between some of the means are statistically significant"
+        print ""
+        print ""
+        print "Your analysis is complete."
+        print "___________________________________________________"
+        print ""
+        print "You may choose another option now."
+        print ""
+        print ""
+    else: #if it is not significant it will print that it is not and then follow this up with a message saying that the analysis is complete so that the user knows the script has ended 
+        print ""
+        print ""
+        print "The differences between the means are not statistically significant "
+        print ""
+        print ""
+        print "Your analysis is complete."
+        print "___________________________________________________"
+        print ""
+        print "You may choose another option now."
+        print ""
+        print ""
 def menu():
     display_welcome_to_project_IE() #prints the welcome message 
     ask_for_menu_input() #asks for user input and then processes it 
-
-menu()# runs the programm
+### NEED TO #MENU() OR REMOVE IT WHEN TESTING###
+menu()# runs the programm 
